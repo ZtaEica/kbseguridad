@@ -75,12 +75,6 @@ dialog .in{padding:28px 32px 32px}dialog img{width:100%;max-height:260px;object-
 
 /* ---- Servicios: tarjetas con foto y páginas de detalle ---- */
 section[id]{scroll-margin-top:64px}
-.card.svc{padding:0;overflow:hidden;display:flex;flex-direction:column}
-.svc .sm{aspect-ratio:16/10;overflow:hidden}.svc .sm img{width:100%;height:100%;object-fit:cover;transition:transform .5s}.card.svc:hover .sm img{transform:scale(1.05)}
-.svc .sb{padding:0 24px 24px;display:flex;flex-direction:column;flex:1}
-.svc .sm+.sb .ic{margin-top:-26px;position:relative;border:4px solid var(--card)}
-.svc .sb{padding-top:24px}.svc .sm+.sb{padding-top:0}
-.svc .more{margin-top:auto;padding-top:14px;display:inline-flex;gap:6px;align-items:center;font-weight:700;color:var(--t)}.svc .more svg{width:18px;transition:transform .25s}.svc:hover .more svg{transform:translateX(4px)}
 a:focus-visible,button:focus-visible,.card:focus-visible{outline:3px solid var(--b);outline-offset:3px}
 
 .sp-hero{padding:36px 0 72px;background:radial-gradient(800px 360px at 90% 0,var(--h1),transparent)}
@@ -105,3 +99,24 @@ section.alt{background:var(--h2)}
 .others a svg:first-child{color:var(--t)}.others a span{flex:1}.others a:hover{border-color:var(--b);transform:translateY(-3px)}
 @media(max-width:860px){.sp-grid{grid-template-columns:1fr}.sp-hero{padding-bottom:48px}}
 .logo{white-space:nowrap}
+
+/* ---- Tarjetas de servicio: foto de fondo + degradado + revelado al hover/foco ---- */
+.card.svc{position:relative;isolation:isolate;overflow:hidden;padding:0;min-height:400px;display:flex;flex-direction:column;justify-content:flex-end;color:#fff;border:0;background:linear-gradient(135deg,#2a2308,#141414);box-shadow:0 10px 30px rgba(0,0,0,.18);transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s}
+.svc .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-3;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.card.svc::before{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(to top,rgba(8,8,8,.94) 0%,rgba(8,8,8,.62) 42%,rgba(8,8,8,.12) 100%)}
+.card.svc::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(to top,rgba(255,196,0,.5),rgba(255,196,0,0) 65%);opacity:0;transition:opacity .5s}
+.svc .ic{position:absolute;top:20px;left:20px;margin:0;transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+.svc .tx{padding:26px 24px}
+.card.svc h3{color:#fff;font-size:1.3rem;margin:0}
+.svc .dx{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .45s cubic-bezier(.2,.7,.2,1),opacity .45s}
+.svc .dx>div{overflow:hidden;min-height:0}
+.card.svc p{color:rgba(255,255,255,.88);margin-top:8px}
+.svc .more{display:inline-flex;gap:6px;align-items:center;margin-top:14px;font-weight:700;color:var(--c)}.svc .more svg{width:18px;transition:transform .3s}
+.card.svc:hover,.card.svc:focus-visible{transform:translateY(-8px);box-shadow:0 22px 44px rgba(255,196,0,.28),0 10px 24px rgba(0,0,0,.4)}
+.card.svc:hover .bg,.card.svc:focus-visible .bg{transform:scale(1.1)}
+.card.svc:hover::after,.card.svc:focus-visible::after{opacity:1}
+.card.svc:hover .dx,.card.svc:focus-visible .dx{grid-template-rows:1fr;opacity:1}
+.card.svc:hover .ic,.card.svc:focus-visible .ic{transform:rotate(-8deg) scale(1.1)}
+.card.svc:hover .more svg{transform:translateX(5px)}
+@media(hover:none){.svc .dx{grid-template-rows:1fr;opacity:1}.card.svc:active{transform:scale(.97)}.card.svc:active::after{opacity:1}}
+@media(max-width:860px){.card.svc{min-height:340px}}

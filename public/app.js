@@ -29,8 +29,9 @@ async function init() {
   <section id="servicios"><div class="wrap">
     <div class="head rv"><span class="tag">Servicios</span><h2>Soluciones completas de seguridad</h2><p>Adaptamos cada servicio a lo que realmente necesitas proteger.</p></div>
     <div class="grid">${C.services.map(s => `<a class="card svc rv" href="${svcUrl(s)}">
-      ${s.image ? `<div class="sm"><img src="${esc(s.image)}" alt="${esc(s.title)}" loading="lazy"></div>` : ''}
-      <div class="sb"><div class="ic"><i data-lucide="${esc(s.icon)}"></i></div><h3>${esc(s.title)}</h3><p>${esc(s.desc)}</p><span class="more">Ver detalles<i data-lucide="arrow-right"></i></span></div>
+      ${s.image ? `<img class="bg" src="${esc(s.image)}" alt="" loading="lazy">` : ''}
+      <div class="ic"><i data-lucide="${esc(s.icon)}"></i></div>
+      <div class="tx"><h3>${esc(s.title)}</h3><div class="dx"><div><p>${esc(s.desc)}</p><span class="more">Ver detalles<i data-lucide="arrow-right"></i></span></div></div></div>
     </a>`).join('')}</div>
   </div></section>
 
