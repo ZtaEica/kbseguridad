@@ -1,18 +1,10 @@
-const $ = (s, r = document) => r.querySelector(s);
-const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const DEMO = true; // pon false cuando el formulario envíe de verdad
-let C;
-const wa = (t = 'Hola, quisiera información sobre sus servicios de seguridad.') =>
-  `https://wa.me/${C.info.whatsapp}?text=${encodeURIComponent(t)}`;
-const fdate = d => { const x = new Date(d + 'T12:00:00'); return isNaN(x) ? '' : x.toLocaleDateString('es-PA', { day: 'numeric', month: 'long', year: 'numeric' }); };
-const paras = t => esc(t).split('\n').filter(Boolean).map(p => `<p style="margin:10px 0">${p}</p>`).join('');
-
+/* Home. Helpers compartidos en core.js */
 async function init() {
-  C = await (await fetch('/api/content')).json();
+  await loadContent();
   const i = C.info;
   document.title = `${i.name} | Seguridad en Panamá`;
-  $('#brand').textContent = i.name;
-  $('#cta').href = wa();
+  const pre = new URLSearchParams(location.search).get('servicio') || ''; // /?servicio=slug#cotizar
+
   $('#app').innerHTML = `
   <section class="hero"><div class="wrap">
     <div class="rv">
@@ -20,12 +12,12 @@ async function init() {
       <h1>${esc(i.heroTitle)}</h1>
       <p class="lead">${esc(i.heroText)}</p>
       <div class="row">
-        <a class="btn" href="${wa()}" target="_blank" rel="noopener"><i data-lucide="message-circle"></i>Cotizar por WhatsApp</a>
+        <a class="btn" href="#cotizar"><i data-lucide="clipboard-list"></i>Cotizar gratis</a>
         <a class="btn o" href="#servicios">Ver servicios<i data-lucide="arrow-right"></i></a>
       </div>
     </div>
     <div class="vis rv">
-      ${i.heroImage ? `<img src="${esc(i.heroImage)}" alt="">` : `<i data-lucide="shield-check" class="shield"></i>`}
+      ${i.heroImage ? `<img src="${esc(i.heroImage)}" alt="Guardia de seguridad de ${esc(i.name)} en un pasillo">` : `<i data-lucide="shield-check" class="shield"></i>`}
       <div class="chip c1"><i data-lucide="eye"></i>Monitoreo 24/7</div>
       <div class="chip c2"><i data-lucide="badge-check"></i>Personal certificado</div>
       <div class="chip c3"><i data-lucide="zap"></i>Respuesta rápida</div>
@@ -36,30 +28,25 @@ async function init() {
 
   <section id="servicios"><div class="wrap">
     <div class="head rv"><span class="tag">Servicios</span><h2>Soluciones completas de seguridad</h2><p>Adaptamos cada servicio a lo que realmente necesitas proteger.</p></div>
-    <div class="grid">${C.services.map(s => `<div class="card rv"><div class="ic"><i data-lucide="${esc(s.icon)}"></i></div><h3>${esc(s.title)}</h3><p>${esc(s.desc)}</p></div>`).join('')}</div>
+    <div class="grid">${C.services.map(s => `<a class="card svc rv" href="${svcUrl(s)}">
+      ${s.image ? `<div class="sm"><img src="${esc(s.image)}" alt="${esc(s.title)}" loading="lazy"></div>` : ''}
+      <div class="sb"><div class="ic"><i data-lucide="${esc(s.icon)}"></i></div><h3>${esc(s.title)}</h3><p>${esc(s.desc)}</p><span class="more">Ver detalles<i data-lucide="arrow-right"></i></span></div>
+    </a>`).join('')}</div>
   </div></section>
 
   <section id="nosotros"><div class="wrap about">
-    <div class="rv">${i.aboutImage ? `<img src="${esc(i.aboutImage)}" alt="">` : `<div class="ph"><i data-lucide="users" style="width:80px;height:80px"></i></div>`}</div>
+    <div class="rv">${i.aboutImage ? `<img src="${esc(i.aboutImage)}" alt="Guardia de ${esc(i.name)} con tableta en un pasillo" loading="lazy">` : `<div class="ph"><i data-lucide="users" style="width:80px;height:80px"></i></div>`}</div>
     <div class="rv"><span class="tag">Nosotros</span><h2 style="margin-top:14px">Seguridad en la que puedes confiar</h2><p class="lead">${esc(i.about)}</p></div>
   </div></section>
 
   ${C.posts.length ? `<section id="blog"><div class="wrap">
     <div class="head rv"><span class="tag">Blog</span><h2>Consejos y novedades</h2></div>
-    <div class="grid">${C.posts.map(p => `<div class="card post rv" data-id="${esc(p.id)}">${p.image ? `<img src="${esc(p.image)}" alt="">` : ''}<div><small>${fdate(p.date)}</small><h3>${esc(p.title)}</h3><p>${esc(p.excerpt)}</p></div></div>`).join('')}</div>
+    <div class="grid">${C.posts.map(p => `<div class="card post rv" data-id="${esc(p.id)}">${p.image ? `<img src="${esc(p.image)}" alt="" loading="lazy">` : ''}<div><small>${fdate(p.date)}</small><h3>${esc(p.title)}</h3><p>${esc(p.excerpt)}</p></div></div>`).join('')}</div>
   </div></section>` : ''}
 
   <section id="cotizar"><div class="wrap">
     <div class="head rv"><span class="tag">Cotización</span><h2>Solicita tu cotización gratis</h2><p>Cuéntanos qué necesitas y un asesor te contactará.</p></div>
-    <form class="qf rv" id="qf">
-      <div><label>Nombre</label><input name="nombre" required></div>
-      <div><label>Teléfono / WhatsApp</label><input name="tel" type="tel" required></div>
-      <div><label>Correo (opcional)</label><input name="correo" type="email"></div>
-      <div><label>Servicio de interés</label><select name="servicio">${C.services.map(s => `<option>${esc(s.title)}</option>`).join('')}</select></div>
-      <div class="f"><label>Detalles</label><textarea name="detalle" rows="4" placeholder="Tipo de propiedad, ubicación, necesidades…"></textarea></div>
-      <div class="f"><button class="btn" style="width:100%"><i data-lucide="send"></i>Solicitar cotización</button></div>
-      ${DEMO ? '<p class="note f">Modo demostración: por ahora los datos no se envían.</p>' : ''}
-    </form>
+    ${quoteForm(pre)}
   </div></section>
 
   <section id="contacto"><div class="wrap"><div class="contact rv">
@@ -71,10 +58,7 @@ async function init() {
       <li><i data-lucide="map-pin"></i>${esc(i.address)}</li>
     </ul>
   </div></div></section>`;
-  $('#ft').textContent = `© ${new Date().getFullYear()} ${i.name}. Todos los derechos reservados.`;
 
-  $('#burger').onclick = () => $('#menu').classList.toggle('open');
-  $('#menu').onclick = () => $('#menu').classList.remove('open');
   $('#app').addEventListener('click', e => {
     const p = e.target.closest('.post'); if (!p) return;
     const x = C.posts.find(a => a.id === p.dataset.id);
@@ -84,41 +68,7 @@ async function init() {
   });
   $('#dg').addEventListener('click', e => { if (e.target.id === 'dg' || e.target.closest('.x')) $('#dg').close(); });
 
-  $('#qf').onsubmit = async e => {
-    e.preventDefault();
-    const f = e.target, d = Object.fromEntries(new FormData(f)), b = f.querySelector('button');
-    b.disabled = true; b.textContent = 'Enviando…';
-    // TODO envío real: await fetch('/api/quote', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d) });
-    await new Promise(r => setTimeout(r, 900));
-    const msg = `Hola, soy ${d.nombre}. Quiero cotizar: ${d.servicio}. ${d.detalle || ''} Mi teléfono: ${d.tel}`;
-    f.innerHTML = `<div class="ok f"><div class="ic"><i data-lucide="check"></i></div><h3>¡Gracias, ${esc(d.nombre)}!</h3><p style="color:var(--mut);margin:6px 0 16px">Recibimos tu solicitud. Un asesor te contactará pronto.</p><a class="btn" target="_blank" rel="noopener" href="${wa(msg)}"><i data-lucide="message-circle"></i>Agilizar por WhatsApp</a>${DEMO ? '<p class="note" style="margin-top:12px">Modo demostración: los datos no se enviaron.</p>' : ''}</div>`;
-    lucide.createIcons();
-  };
-  const tg = $('#tg'), root = document.documentElement;
-  const paint = () => { tg.innerHTML = `<i data-lucide="${root.dataset.theme == 'dark' ? 'sun' : 'moon'}"></i>`; lucide.createIcons(); };
-  tg.onclick = () => { const n = root.dataset.theme == 'dark' ? 'light' : 'dark'; root.dataset.theme = n; localStorage.kbTheme = n; paint(); };
-  paint();
-
-  lucide.createIcons();
-  const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && (e.target.classList.add('in'), io.unobserve(e.target))), { threshold: .12 });
-  document.querySelectorAll('.rv').forEach(el => io.observe(el));
-  chat();
-}
-
-function chat() {
-  const ms = $('#ms');
-  const add = (h, c) => { const d = document.createElement('div'); d.className = 'm ' + c; d.innerHTML = h; ms.append(d); ms.scrollTop = 1e5; lucide.createIcons(); };
-  const link = t => `<br><a class="btn" target="_blank" rel="noopener" href="${wa(t)}"><i data-lucide="message-circle"></i>Hablar por WhatsApp</a>`;
-  const reply = t => {
-    const s = t.toLowerCase();
-    const f = C.faq.find(f => f.q.split(',').some(k => k.trim() && s.includes(k.trim().toLowerCase())));
-    setTimeout(() => add((f ? esc(f.a) : 'Con gusto te ayudo. Un asesor puede darte una respuesta exacta y una cotización sin compromiso.') + link(t), 'b'), 450);
-  };
-  const send = t => { if (!t.trim()) return; add(esc(t), 'u'); reply(t); };
-  add('¡Hola! 👋 Soy el asistente de ' + esc(C.info.name) + '. ¿En qué te puedo ayudar?', 'b');
-  $('#qk').innerHTML = ['Servicios', 'Cotizar', 'Horarios', 'Ubicación'].map(q => `<button>${q}</button>`).join('');
-  $('#qk').onclick = e => e.target.tagName === 'BUTTON' && send(e.target.textContent);
-  $('#cf').onsubmit = e => { e.preventDefault(); send($('#ci').value); $('#ci').value = ''; };
-  $('#cb').onclick = () => $('#cw').classList.toggle('on');
+  bindQuote();
+  shell();
 }
 init();

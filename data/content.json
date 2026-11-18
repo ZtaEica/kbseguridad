@@ -9,31 +9,279 @@
     "email": "info@kbseguridad.com",
     "address": "Ciudad de Panamá, Panamá",
     "about": "KB es una empresa panameña de seguridad con personal certificado, tecnología de punta y atención personalizada. Diseñamos soluciones a la medida de cada cliente, con respuesta rápida y total confidencialidad.",
-    "heroImage": "",
-    "aboutImage": ""
+    "heroImage": "/img/guardia-frente.jpg",
+    "aboutImage": "/img/control-registro.jpg"
   },
   "stats": [
-    { "n": "15+", "l": "Años de experiencia" },
-    { "n": "300+", "l": "Clientes protegidos" },
-    { "n": "24/7", "l": "Central de monitoreo" },
-    { "n": "98%", "l": "Clientes satisfechos" }
+    {
+      "n": "15+",
+      "l": "Años de experiencia"
+    },
+    {
+      "n": "300+",
+      "l": "Clientes protegidos"
+    },
+    {
+      "n": "24/7",
+      "l": "Central de monitoreo"
+    },
+    {
+      "n": "98%",
+      "l": "Clientes satisfechos"
+    }
   ],
   "services": [
-    { "icon": "shield-check", "title": "Guardias de seguridad", "desc": "Personal uniformado, capacitado y verificado para edificios, comercios y eventos." },
-    { "icon": "cctv", "title": "Cámaras y videovigilancia", "desc": "Instalación de CCTV con acceso remoto desde tu celular." },
-    { "icon": "bell-ring", "title": "Alarmas y monitoreo 24/7", "desc": "Central de monitoreo con respuesta inmediata ante cualquier alerta." },
-    { "icon": "lock-keyhole", "title": "Control de acceso", "desc": "Tarjetas, biometría y registro de visitantes para tu propiedad." },
-    { "icon": "car", "title": "Escolta y custodia", "desc": "Protección para ejecutivos, valores y traslados." },
-    { "icon": "building-2", "title": "Asesoría de seguridad", "desc": "Evaluamos riesgos y diseñamos un plan de protección a tu medida." }
+    {
+      "icon": "shield-check",
+      "title": "Guardias de seguridad",
+      "desc": "Personal uniformado, capacitado y verificado para edificios, comercios y eventos.",
+      "slug": "guardias-de-seguridad",
+      "image": "/img/guardia-ronda.jpg",
+      "intro": "Personal uniformado y capacitado que vigila, controla y atiende tu propiedad en el turno que necesites: diurno, nocturno o 24 horas.",
+      "details": [
+        "Cada guardia es verificado y recibe una inducción sobre el puesto que va a cubrir, para que conozca los accesos, las rutinas y los protocolos de tu edificio, comercio o evento.",
+        "Un supervisor visita los puestos y recibe el reporte de novedades de cada turno, de modo que siempre sabes quién cubre tu propiedad y qué ocurrió."
+      ],
+      "features": [
+        "Guardias uniformados y verificados",
+        "Turnos diurnos, nocturnos o de 24 horas",
+        "Rondas de vigilancia con bitácora",
+        "Control de entradas y salidas de personas y vehículos",
+        "Reporte de novedades por turno",
+        "Cobertura para eventos y obras"
+      ],
+      "idealFor": [
+        "Edificios y residenciales",
+        "Comercios y centros comerciales",
+        "Oficinas y bodegas",
+        "Eventos y construcciones"
+      ],
+      "steps": [
+        "Evaluamos tu propiedad: Definimos puestos, turnos y cantidad de guardias necesarios.",
+        "Asignamos el equipo: Elegimos y preparamos al personal para tu puesto.",
+        "Supervisamos cada turno: Revisamos los puestos y te entregamos reportes."
+      ],
+      "gallery": [
+        "/img/guardia-frente.jpg",
+        "/img/guardia-vertical-2.jpg",
+        "/img/guardia-pasillo.jpg"
+      ]
+    },
+    {
+      "icon": "cctv",
+      "title": "Cámaras y videovigilancia",
+      "desc": "Instalación de CCTV con acceso remoto desde tu celular.",
+      "slug": "camaras-y-videovigilancia",
+      "image": "/img/monitoreo-pantallas.jpg",
+      "intro": "Diseñamos e instalamos sistemas de CCTV para que veas tu casa o negocio en tiempo real y tengas grabaciones disponibles cuando las necesites.",
+      "details": [
+        "Ubicamos cada cámara según los puntos críticos de tu propiedad: accesos, cajas, bodegas, estacionamientos y perímetros. Con acceso remoto ves las imágenes desde tu celular, estés donde estés.",
+        "Instalamos, configuramos y damos soporte al equipo. Además, podemos conectarlo a nuestra central de monitoreo para que alguien esté mirando incluso cuando tú no puedes."
+      ],
+      "features": [
+        "Cámaras para interior y exterior",
+        "Visión nocturna",
+        "Acceso remoto desde celular y computadora",
+        "Grabación y respaldo de imágenes",
+        "Instalación con cableado ordenado",
+        "Mantenimiento y soporte técnico"
+      ],
+      "idealFor": [
+        "Hogares y apartamentos",
+        "Comercios y restaurantes",
+        "Oficinas",
+        "Bodegas y estacionamientos"
+      ],
+      "steps": [
+        "Visita técnica: Recorremos el lugar y definimos qué cámaras van y dónde.",
+        "Cotización clara: Recibes la propuesta con equipos, cantidad e instalación.",
+        "Instalación y capacitación: Dejamos todo funcionando y te enseñamos a usarlo desde tu celular."
+      ],
+      "gallery": [
+        "/img/camaras-pared.jpg",
+        "/img/monitoreo-nocturno.jpg",
+        "/img/central-radio.jpg"
+      ]
+    },
+    {
+      "icon": "bell-ring",
+      "title": "Alarmas y monitoreo 24/7",
+      "desc": "Central de monitoreo con respuesta inmediata ante cualquier alerta.",
+      "slug": "alarmas-y-monitoreo-24-7",
+      "image": "/img/central-radio.jpg",
+      "intro": "Sensores en tu propiedad conectados a una central que atiende cada señal las 24 horas, todos los días del año.",
+      "details": [
+        "Cuando se activa una alarma, la central verifica la señal y avisa a tus contactos y a las autoridades según el protocolo que acordemos contigo.",
+        "Puedes sumar botón de pánico y notificaciones al celular para enterarte al instante de lo que pasa en tu propiedad."
+      ],
+      "features": [
+        "Sensores de movimiento, puertas y ventanas",
+        "Sirena y notificaciones al celular",
+        "Botón de pánico",
+        "Central de monitoreo 24/7",
+        "Protocolo de respuesta acordado contigo",
+        "Respaldo de batería ante cortes de luz"
+      ],
+      "idealFor": [
+        "Hogares y apartamentos",
+        "Negocios que cierran de noche",
+        "Oficinas",
+        "Casas de playa o de fin de semana"
+      ],
+      "steps": [
+        "Revisamos los puntos de entrada: Identificamos puertas, ventanas y zonas vulnerables.",
+        "Instalamos y programamos: Configuramos sensores, sirena y contactos de emergencia.",
+        "Monitoreamos y respondemos: La central atiende cada señal según el protocolo acordado."
+      ],
+      "gallery": [
+        "/img/monitoreo-nocturno.jpg",
+        "/img/camaras-pared.jpg",
+        "/img/monitoreo-pantallas.jpg"
+      ]
+    },
+    {
+      "icon": "lock-keyhole",
+      "title": "Control de acceso",
+      "desc": "Tarjetas, biometría y registro de visitantes para tu propiedad.",
+      "slug": "control-de-acceso",
+      "image": "/img/control-registro.jpg",
+      "intro": "Decide quién entra, cuándo y por dónde, y deja un registro ordenado de cada ingreso a tu propiedad.",
+      "details": [
+        "Combinamos tarjetas, códigos o lectores biométricos con un registro digital de visitantes que reemplaza la libreta de papel y te permite consultar quién ingresó y a qué hora.",
+        "Cada persona tiene permisos y horarios propios, y puedes retirar un acceso al momento si alguien deja de pertenecer a tu equipo o residencial."
+      ],
+      "features": [
+        "Tarjetas, llaveros o códigos de acceso",
+        "Lectores biométricos (huella o rostro)",
+        "Registro digital de visitantes",
+        "Barreras y puertas automáticas",
+        "Horarios y permisos por persona",
+        "Historial de entradas y salidas"
+      ],
+      "idealFor": [
+        "Residenciales y edificios",
+        "Oficinas y empresas",
+        "Bodegas y plantas",
+        "Colegios y clínicas"
+      ],
+      "steps": [
+        "Mapeamos los accesos: Definimos puntos de ingreso y quién debe usar cada uno.",
+        "Instalamos los equipos: Lectores, cerraduras y software de registro.",
+        "Configuramos permisos: Cargamos personas, horarios y niveles de acceso."
+      ],
+      "gallery": [
+        "/img/guardia-perimetro.jpg",
+        "/img/guardia-radio-exterior.jpg",
+        "/img/guardia-ronda.jpg"
+      ]
+    },
+    {
+      "icon": "car",
+      "title": "Escolta y custodia",
+      "desc": "Protección para ejecutivos, valores y traslados.",
+      "slug": "escolta-y-custodia",
+      "image": "/img/guardia-radio-exterior.jpg",
+      "intro": "Acompañamiento profesional para ejecutivos, familias y traslados de valores, con planificación previa de cada ruta.",
+      "details": [
+        "Antes de cada servicio revisamos la ruta, los horarios y los riesgos, y coordinamos contigo para actuar con discreción y sin interrumpir tu rutina.",
+        "Nuestros escoltas mantienen comunicación permanente por radio con la central durante todo el recorrido."
+      ],
+      "features": [
+        "Escolta personal para ejecutivos",
+        "Custodia de valores y mercancía",
+        "Planificación de rutas",
+        "Comunicación por radio con la central",
+        "Discreción y confidencialidad",
+        "Servicio por evento, por día o por contrato"
+      ],
+      "idealFor": [
+        "Ejecutivos y empresarios",
+        "Familias",
+        "Empresas con traslado de valores",
+        "Eventos privados"
+      ],
+      "steps": [
+        "Análisis de riesgo: Conocemos tu agenda, rutas y puntos sensibles.",
+        "Plan del servicio: Definimos personal, vehículos y protocolo de actuación.",
+        "Ejecución y reporte: Acompañamos el traslado y te informamos al finalizar."
+      ],
+      "gallery": [
+        "/img/guardia-radio-vertical.jpg",
+        "/img/guardia-perimetro.jpg",
+        "/img/guardia-vertical-1.jpg"
+      ]
+    },
+    {
+      "icon": "building-2",
+      "title": "Asesoría de seguridad",
+      "desc": "Evaluamos riesgos y diseñamos un plan de protección a tu medida.",
+      "slug": "asesoria-de-seguridad",
+      "image": "/img/monitoreo-nocturno.jpg",
+      "intro": "Revisamos tu propiedad, detectamos puntos débiles y te entregamos un plan claro para protegerla, sin que tengas que comprarlo todo de una vez.",
+      "details": [
+        "Sirve tanto si empiezas desde cero como si ya tienes guardias, cámaras o alarmas y quieres saber si funcionan bien en conjunto.",
+        "Recibes un informe con prioridades para decidir qué hacer primero según tu presupuesto."
+      ],
+      "features": [
+        "Visita y evaluación de riesgos",
+        "Revisión de guardias, cámaras y alarmas existentes",
+        "Informe con prioridades",
+        "Recomendaciones según tu presupuesto",
+        "Protocolos de emergencia para tu equipo",
+        "Seguimiento posterior"
+      ],
+      "idealFor": [
+        "Propietarios que empiezan de cero",
+        "Negocios que van a abrir un local",
+        "Administradores de residenciales",
+        "Empresas que quieren revisar su seguridad"
+      ],
+      "steps": [
+        "Visita de evaluación: Recorremos la propiedad e identificamos riesgos.",
+        "Informe y prioridades: Te explicamos qué corregir primero y por qué.",
+        "Plan a tu medida: Armamos una propuesta que puedes ejecutar por etapas."
+      ],
+      "gallery": [
+        "/img/control-registro.jpg",
+        "/img/guardia-frente.jpg",
+        "/img/camaras-pared.jpg"
+      ]
+    }
   ],
   "posts": [
-    { "id": "1", "title": "5 consejos para proteger tu hogar en vacaciones", "date": "2026-11-01", "excerpt": "Pequeños hábitos que reducen el riesgo mientras estás fuera.", "body": "Antes de viajar, avisa a un vecino de confianza y evita publicar tu ubicación en redes.\nUsa luces con temporizador y verifica puertas y ventanas.\nUn sistema de alarma con monitoreo te permite estar tranquilo desde cualquier lugar.", "image": "" },
-    { "id": "2", "title": "¿Cuántas cámaras necesita tu negocio?", "date": "2026-10-15", "excerpt": "Cómo elegir la cantidad y ubicación ideal de cámaras.", "body": "Todo depende del tamaño del local y de los puntos de acceso.\nPrioriza entradas, cajas y bodegas.\nSolicita una evaluación gratuita y te recomendamos la mejor distribución.", "image": "" }
+    {
+      "id": "1",
+      "title": "5 consejos para proteger tu hogar en vacaciones",
+      "date": "2026-11-01",
+      "excerpt": "Pequeños hábitos que reducen el riesgo mientras estás fuera.",
+      "body": "Antes de viajar, avisa a un vecino de confianza y evita publicar tu ubicación en redes.\nUsa luces con temporizador y verifica puertas y ventanas.\nUn sistema de alarma con monitoreo te permite estar tranquilo desde cualquier lugar.",
+      "image": "/img/guardia-radio-exterior.jpg"
+    },
+    {
+      "id": "2",
+      "title": "¿Cuántas cámaras necesita tu negocio?",
+      "date": "2026-10-15",
+      "excerpt": "Cómo elegir la cantidad y ubicación ideal de cámaras.",
+      "body": "Todo depende del tamaño del local y de los puntos de acceso.\nPrioriza entradas, cajas y bodegas.\nSolicita una evaluación gratuita y te recomendamos la mejor distribución.",
+      "image": "/img/camaras-pared.jpg"
+    }
   ],
   "faq": [
-    { "q": "servicio,ofrecen,hacen", "a": "Ofrecemos guardias de seguridad, cámaras, alarmas con monitoreo 24/7, control de acceso, escolta y asesoría." },
-    { "q": "cotiz,precio,costo,cuánto,cuanto", "a": "Cada servicio se cotiza a la medida. Un asesor te prepara una propuesta sin compromiso." },
-    { "q": "horario,hora,abierto,atienden", "a": "Nuestra central opera 24/7. Las oficinas atienden de lunes a viernes, 8:00 a.m. a 5:00 p.m." },
-    { "q": "ubicaci,donde,dónde,direcci,cobertura", "a": "Estamos en Ciudad de Panamá y damos cobertura en todo el país." }
+    {
+      "q": "servicio,ofrecen,hacen",
+      "a": "Ofrecemos guardias de seguridad, cámaras, alarmas con monitoreo 24/7, control de acceso, escolta y asesoría."
+    },
+    {
+      "q": "cotiz,precio,costo,cuánto,cuanto",
+      "a": "Cada servicio se cotiza a la medida. Un asesor te prepara una propuesta sin compromiso."
+    },
+    {
+      "q": "horario,hora,abierto,atienden",
+      "a": "Nuestra central opera 24/7. Las oficinas atienden de lunes a viernes, 8:00 a.m. a 5:00 p.m."
+    },
+    {
+      "q": "ubicaci,donde,dónde,direcci,cobertura",
+      "a": "Estamos en Ciudad de Panamá y damos cobertura en todo el país."
+    }
   ]
 }

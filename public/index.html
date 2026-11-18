@@ -13,11 +13,11 @@
 </head>
 <body>
 <header class="nav">
-  <a class="logo" href="#"><i data-lucide="shield-check"></i><span id="brand">KB</span></a>
+  <a class="logo" href="/" aria-label="Inicio"><i data-lucide="shield-check"></i><span id="brand">KB</span></a>
   <nav id="menu">
-    <a href="#servicios">Servicios</a><a href="#nosotros">Nosotros</a><a href="#blog">Blog</a><a href="#cotizar">Cotizar</a><a href="#contacto">Contacto</a>
+    <a href="/#servicios">Servicios</a><a href="/#nosotros">Nosotros</a><a href="/#blog">Blog</a><a href="/#cotizar" data-cotizar>Cotizar</a><a href="/#contacto">Contacto</a>
   </nav>
-  <a class="btn" id="cta" target="_blank" rel="noopener"><i data-lucide="message-circle"></i><span>Cotizar</span></a>
+  <a class="btn" id="cta" href="/#cotizar" data-cotizar aria-label="Cotizar"><i data-lucide="clipboard-list"></i><span>Cotizar</span></a>
   <button id="tg" aria-label="Cambiar tema"><i data-lucide="moon"></i></button>
   <button id="burger" aria-label="Menú"><i data-lucide="menu"></i></button>
 </header>
@@ -32,6 +32,7 @@
   <form class="cf" id="cf"><input id="ci" placeholder="Escribe tu duda…" autocomplete="off"><button class="btn" style="padding:10px 14px" aria-label="Enviar"><i data-lucide="send"></i></button></form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+<script src="/core.js"></script>
 <script src="/app.js"></script>
 </body>
 </html>

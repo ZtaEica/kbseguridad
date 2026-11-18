@@ -26,7 +26,7 @@ input:focus,textarea:focus{outline:2px solid var(--b)}
 const S = {
   info: [['name','Nombre de la empresa'],['tagline','Eslogan corto'],['heroTitle','Título principal'],['heroText','Texto principal','t'],['whatsapp','WhatsApp (solo números, con 507 al inicio)'],['phone','Teléfono'],['email','Correo'],['address','Dirección'],['about','Sobre nosotros','t'],['heroImage','Imagen principal (opcional)','i'],['aboutImage','Imagen de "Nosotros" (opcional)','i']],
   stats: [['n','Número (ej. 15+)'],['l','Etiqueta']],
-  services: [['icon','Icono (nombre en lucide.dev/icons)'],['title','Título'],['desc','Descripción','t']],
+  services: [['title','Título'],['slug','Enlace de la página (sin espacios ni tildes, ej. control-de-acceso)'],['icon','Icono (nombre en lucide.dev/icons)'],['desc','Descripción corta (tarjeta)','t'],['image','Imagen del servicio','i'],['intro','Introducción de la página','t'],['details','Descripción detallada (un párrafo por línea)','l'],['features','Qué incluye (uno por línea)','l'],['idealFor','Ideal para (uno por línea)','l'],['steps','Cómo trabajamos (una por línea, formato «Título: texto»)','l'],['gallery','Galería (rutas de imagen, una por línea, ej. /img/camaras-pared.jpg)','l']],
   posts: [['title','Título'],['date','Fecha (AAAA-MM-DD)'],['excerpt','Resumen','t'],['body','Contenido (un párrafo por línea)','t'],['image','Imagen (opcional)','i']],
   faq: [['q','Palabras clave que activan la respuesta (separadas por coma)'],['a','Respuesta del chatbot','t']]
 };
@@ -57,11 +57,12 @@ function draw() {
   items.map((it, i) => `<div class="card">${S[tab].map(([k, l, t]) => `<label>${l}</label>` + (
     t == 'i' ? `<input type="file" accept="image/*" data-i="${i}" data-k="${k}">${it[k] ? `<img src="${esc(it[k])}" style="max-height:90px;margin-top:8px;border-radius:10px"><button class="tb" data-x="${i}" data-k="${k}" style="margin-top:6px">Quitar imagen</button>` : ''}` :
     t == 't' ? `<textarea rows="4" data-i="${i}" data-k="${k}">${esc(it[k])}</textarea>` :
+    t == 'l' ? `<textarea rows="5" data-l="1" data-i="${i}" data-k="${k}">${esc([].concat(it[k] || []).join('\n'))}</textarea>` :
     `<input value="${esc(it[k])}" data-i="${i}" data-k="${k}">`)).join('')}
     ${list ? `<br><br><button class="btn o" data-d="${i}">Eliminar</button>` : ''}</div>`).join('') +
   `<div class="row">${list ? '<button class="btn o" id="add">+ Agregar</button>' : ''}<button class="btn" id="sv">Guardar cambios</button><a class="btn o" href="/" target="_blank">Ver sitio</a></div><p id="st" class="hint" style="margin-top:12px"></p>`;
 }
-R.addEventListener('input', e => { const t = e.target; if (t.dataset.k && t.type != 'file') cur(t.dataset.i)[t.dataset.k] = t.value; });
+R.addEventListener('input', e => { const t = e.target; if (t.dataset.k && t.type != 'file') cur(t.dataset.i)[t.dataset.k] = t.dataset.l ? t.value.split('\n').map(x => x.trim()).filter(Boolean) : t.value; });
 R.addEventListener('change', e => {
   const t = e.target; if (t.type != 'file' || !t.files[0]) return;
   const rd = new FileReader();
@@ -77,7 +78,7 @@ R.addEventListener('click', async e => {
   if (t.dataset.t) { tab = t.dataset.t; draw(); }
   if (t.dataset.d) { if (confirm('¿Eliminar este elemento?')) { D[tab].splice(t.dataset.d, 1); draw(); } }
   if (t.dataset.x) { cur(t.dataset.x)[t.dataset.k] = ''; draw(); }
-  if (t.id == 'add') { const o = { id: Date.now() + '' }; S[tab].forEach(([k]) => o[k] = ''); if (tab == 'posts') o.date = new Date().toISOString().slice(0, 10); D[tab].unshift(o); draw(); }
+  if (t.id == 'add') { const o = { id: Date.now() + '' }; S[tab].forEach(([k, , t]) => o[k] = t == 'l' ? [] : ''); if (tab == 'posts') o.date = new Date().toISOString().slice(0, 10); D[tab].unshift(o); draw(); }
   if (t.id == 'sv') {
     $('#st').textContent = 'Guardando…';
     try { await api('/api/content', { method: 'POST', body: JSON.stringify(D) }); $('#st').textContent = '✓ Guardado'; }

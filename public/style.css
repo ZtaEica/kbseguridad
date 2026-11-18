@@ -72,3 +72,36 @@ dialog .in{padding:28px 32px 32px}dialog img{width:100%;max-height:260px;object-
 .ok{text-align:center;padding:20px;animation:pop .4s}.ok .ic{margin:0 auto 14px;width:64px;height:64px}
 .note{font-size:.78rem;color:var(--mut);text-align:center}
 @media(max-width:860px){.qf{grid-template-columns:1fr;padding:22px}.qf .f{grid-column:auto}}
+
+/* ---- Servicios: tarjetas con foto y páginas de detalle ---- */
+section[id]{scroll-margin-top:64px}
+.card.svc{padding:0;overflow:hidden;display:flex;flex-direction:column}
+.svc .sm{aspect-ratio:16/10;overflow:hidden}.svc .sm img{width:100%;height:100%;object-fit:cover;transition:transform .5s}.card.svc:hover .sm img{transform:scale(1.05)}
+.svc .sb{padding:0 24px 24px;display:flex;flex-direction:column;flex:1}
+.svc .sm+.sb .ic{margin-top:-26px;position:relative;border:4px solid var(--card)}
+.svc .sb{padding-top:24px}.svc .sm+.sb{padding-top:0}
+.svc .more{margin-top:auto;padding-top:14px;display:inline-flex;gap:6px;align-items:center;font-weight:700;color:var(--t)}.svc .more svg{width:18px;transition:transform .25s}.svc:hover .more svg{transform:translateX(4px)}
+a:focus-visible,button:focus-visible,.card:focus-visible{outline:3px solid var(--b);outline-offset:3px}
+
+.sp-hero{padding:36px 0 72px;background:radial-gradient(800px 360px at 90% 0,var(--h1),transparent)}
+.crumbs{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:.85rem;color:var(--mut);margin-bottom:28px}.crumbs a:hover{color:var(--t)}.crumbs svg{width:15px}.crumbs span{color:var(--ink);font-weight:600}
+.sp-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.sp-img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:28px;box-shadow:var(--sh)}
+.sp-img.ph{background:var(--tint);display:grid;place-items:center;color:var(--t)}
+section.alt{background:var(--h2)}
+.narrow{max-width:760px}.prose p{margin:14px 0;font-size:1.1rem;color:var(--mut)}
+.feats{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px}
+.feats li{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;font-weight:600}
+.feats li span{flex:none;width:32px;height:32px;border-radius:50%;background:var(--b);color:var(--on);display:grid;place-items:center}.feats li svg{width:18px}
+.chips{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.chips span{background:var(--card);border:1.5px solid var(--b);border-radius:999px;padding:10px 22px;font-weight:600}
+.steps{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px;counter-reset:s}
+.steps li{counter-increment:s;position:relative;padding-top:84px}.steps li:hover{transform:none}
+.steps li::before{content:counter(s);position:absolute;top:22px;left:28px;width:40px;height:40px;border-radius:50%;background:var(--b);color:var(--on);display:grid;place-items:center;font-weight:800}
+.gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.gal img{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:center 25%;border-radius:20px;box-shadow:var(--sh)}
+.others{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.others a{display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;font-weight:600;transition:.25s}
+.others a svg:first-child{color:var(--t)}.others a span{flex:1}.others a:hover{border-color:var(--b);transform:translateY(-3px)}
+@media(max-width:860px){.sp-grid{grid-template-columns:1fr}.sp-hero{padding-bottom:48px}}
+.logo{white-space:nowrap}
