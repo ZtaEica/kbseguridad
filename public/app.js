@@ -11,7 +11,7 @@ async function init() {
   const i = C.info;
   document.title = `${i.name} | Seguridad en Panamá`;
   $('#brand').textContent = i.name;
-  $('#cta').href = '#cotizacion';
+  $('#cta').href = wa();
   $('#app').innerHTML = `
   <section class="hero"><div class="wrap">
     <div class="rv">
@@ -19,7 +19,7 @@ async function init() {
       <h1>${esc(i.heroTitle)}</h1>
       <p class="lead">${esc(i.heroText)}</p>
       <div class="row">
-        <a class="btn" href="#cotizacion"><i data-lucide="clipboard-list"></i>Solicitar cotización</a>
+        <a class="btn" href="${wa()}" target="_blank" rel="noopener"><i data-lucide="message-circle"></i>Cotizar por WhatsApp</a>
         <a class="btn o" href="#servicios">Ver servicios<i data-lucide="arrow-right"></i></a>
       </div>
     </div>
@@ -35,7 +35,7 @@ async function init() {
 
   <section id="servicios"><div class="wrap">
     <div class="head rv"><span class="tag">Servicios</span><h2>Soluciones completas de seguridad</h2><p>Adaptamos cada servicio a lo que realmente necesitas proteger.</p></div>
-    <div class="grid">${C.services.map((s, index) => `<article class="card service-card rv"><div class="ic"><i data-lucide="${esc(s.icon)}"></i></div><h3>${esc(s.title)}</h3><p>${esc(s.desc)}</p><button class="text-button" type="button" data-service="${index}" aria-haspopup="dialog" aria-label="Ver detalles de ${esc(s.title)}">Ver detalles <i data-lucide="arrow-up-right"></i></button></article>`).join('')}</div>
+    <div class="grid">${C.services.map(s => `<div class="card rv"><div class="ic"><i data-lucide="${esc(s.icon)}"></i></div><h3>${esc(s.title)}</h3><p>${esc(s.desc)}</p></div>`).join('')}</div>
   </div></section>
 
   <section id="nosotros"><div class="wrap about">
@@ -45,10 +45,8 @@ async function init() {
 
   ${C.posts.length ? `<section id="blog"><div class="wrap">
     <div class="head rv"><span class="tag">Blog</span><h2>Consejos y novedades</h2></div>
-    <div class="grid">${C.posts.map(p => `<article class="card post rv">${p.image ? `<img src="${esc(p.image)}" alt="">` : ''}<div><small>${fdate(p.date)}</small><h3>${esc(p.title)}</h3><p>${esc(p.excerpt)}</p><button type="button" class="text-button" data-post="${esc(p.id)}" aria-haspopup="dialog" aria-label="Leer ${esc(p.title)}">Leer artículo <i data-lucide="arrow-right"></i></button></div></article>`).join('')}</div>
+    <div class="grid">${C.posts.map(p => `<div class="card post rv" data-id="${esc(p.id)}">${p.image ? `<img src="${esc(p.image)}" alt="">` : ''}<div><small>${fdate(p.date)}</small><h3>${esc(p.title)}</h3><p>${esc(p.excerpt)}</p></div></div>`).join('')}</div>
   </div></section>` : ''}
-
-  ${KBDemo.quoteMarkup(C.services)}
 
   <section id="contacto"><div class="wrap"><div class="contact rv">
     <div><h2>Hablemos de tu seguridad</h2><p class="lead">Cuéntanos qué necesitas y te respondemos hoy mismo.</p>
@@ -63,9 +61,16 @@ async function init() {
 
   $('#burger').onclick = () => $('#menu').classList.toggle('open');
   $('#menu').onclick = () => $('#menu').classList.remove('open');
-  KBDemo.init(C);
+  $('#app').addEventListener('click', e => {
+    const p = e.target.closest('.post'); if (!p) return;
+    const x = C.posts.find(a => a.id === p.dataset.id);
+    $('#dg').innerHTML = (x.image ? `<img src="${esc(x.image)}" alt="">` : '') +
+      `<div class="in"><button class="x" aria-label="Cerrar">✕</button><small style="color:var(--b);font-weight:700">${fdate(x.date)}</small><h2>${esc(x.title)}</h2>${paras(x.body)}<div class="row"><a class="btn" href="${wa('Hola, leí su artículo: ' + x.title)}" target="_blank" rel="noopener"><i data-lucide="message-circle"></i>Consultar por WhatsApp</a></div></div>`;
+    lucide.createIcons(); $('#dg').showModal();
+  });
+  $('#dg').addEventListener('click', e => { if (e.target.id === 'dg' || e.target.closest('.x')) $('#dg').close(); });
 
-  window.lucide?.createIcons();
+  lucide.createIcons();
   const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && (e.target.classList.add('in'), io.unobserve(e.target))), { threshold: .12 });
   document.querySelectorAll('.rv').forEach(el => io.observe(el));
   chat();
@@ -73,7 +78,7 @@ async function init() {
 
 function chat() {
   const ms = $('#ms');
-  const add = (h, c) => { const d = document.createElement('div'); d.className = 'm ' + c; d.innerHTML = h; ms.append(d); ms.scrollTop = 1e5; window.lucide?.createIcons(); };
+  const add = (h, c) => { const d = document.createElement('div'); d.className = 'm ' + c; d.innerHTML = h; ms.append(d); ms.scrollTop = 1e5; lucide.createIcons(); };
   const link = t => `<br><a class="btn" target="_blank" rel="noopener" href="${wa(t)}"><i data-lucide="message-circle"></i>Hablar por WhatsApp</a>`;
   const reply = t => {
     const s = t.toLowerCase();
