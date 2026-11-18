@@ -1,5 +1,6 @@
 const $ = (s, r = document) => r.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const DEMO = true; // pon false cuando el formulario envíe de verdad
 let C;
 const wa = (t = 'Hola, quisiera información sobre sus servicios de seguridad.') =>
   `https://wa.me/${C.info.whatsapp}?text=${encodeURIComponent(t)}`;
@@ -48,6 +49,19 @@ async function init() {
     <div class="grid">${C.posts.map(p => `<div class="card post rv" data-id="${esc(p.id)}">${p.image ? `<img src="${esc(p.image)}" alt="">` : ''}<div><small>${fdate(p.date)}</small><h3>${esc(p.title)}</h3><p>${esc(p.excerpt)}</p></div></div>`).join('')}</div>
   </div></section>` : ''}
 
+  <section id="cotizar"><div class="wrap">
+    <div class="head rv"><span class="tag">Cotización</span><h2>Solicita tu cotización gratis</h2><p>Cuéntanos qué necesitas y un asesor te contactará.</p></div>
+    <form class="qf rv" id="qf">
+      <div><label>Nombre</label><input name="nombre" required></div>
+      <div><label>Teléfono / WhatsApp</label><input name="tel" type="tel" required></div>
+      <div><label>Correo (opcional)</label><input name="correo" type="email"></div>
+      <div><label>Servicio de interés</label><select name="servicio">${C.services.map(s => `<option>${esc(s.title)}</option>`).join('')}</select></div>
+      <div class="f"><label>Detalles</label><textarea name="detalle" rows="4" placeholder="Tipo de propiedad, ubicación, necesidades…"></textarea></div>
+      <div class="f"><button class="btn" style="width:100%"><i data-lucide="send"></i>Solicitar cotización</button></div>
+      ${DEMO ? '<p class="note f">Modo demostración: por ahora los datos no se envían.</p>' : ''}
+    </form>
+  </div></section>
+
   <section id="contacto"><div class="wrap"><div class="contact rv">
     <div><h2>Hablemos de tu seguridad</h2><p class="lead">Cuéntanos qué necesitas y te respondemos hoy mismo.</p>
       <div class="row"><a class="btn" href="${wa()}" target="_blank" rel="noopener"><i data-lucide="message-circle"></i>Escribir por WhatsApp</a></div></div>
@@ -65,10 +79,25 @@ async function init() {
     const p = e.target.closest('.post'); if (!p) return;
     const x = C.posts.find(a => a.id === p.dataset.id);
     $('#dg').innerHTML = (x.image ? `<img src="${esc(x.image)}" alt="">` : '') +
-      `<div class="in"><button class="x" aria-label="Cerrar">✕</button><small style="color:var(--b);font-weight:700">${fdate(x.date)}</small><h2>${esc(x.title)}</h2>${paras(x.body)}<div class="row"><a class="btn" href="${wa('Hola, leí su artículo: ' + x.title)}" target="_blank" rel="noopener"><i data-lucide="message-circle"></i>Consultar por WhatsApp</a></div></div>`;
+      `<div class="in"><button class="x" aria-label="Cerrar">✕</button><small style="color:var(--t);font-weight:700">${fdate(x.date)}</small><h2>${esc(x.title)}</h2>${paras(x.body)}<div class="row"><a class="btn" href="${wa('Hola, leí su artículo: ' + x.title)}" target="_blank" rel="noopener"><i data-lucide="message-circle"></i>Consultar por WhatsApp</a></div></div>`;
     lucide.createIcons(); $('#dg').showModal();
   });
   $('#dg').addEventListener('click', e => { if (e.target.id === 'dg' || e.target.closest('.x')) $('#dg').close(); });
+
+  $('#qf').onsubmit = async e => {
+    e.preventDefault();
+    const f = e.target, d = Object.fromEntries(new FormData(f)), b = f.querySelector('button');
+    b.disabled = true; b.textContent = 'Enviando…';
+    // TODO envío real: await fetch('/api/quote', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d) });
+    await new Promise(r => setTimeout(r, 900));
+    const msg = `Hola, soy ${d.nombre}. Quiero cotizar: ${d.servicio}. ${d.detalle || ''} Mi teléfono: ${d.tel}`;
+    f.innerHTML = `<div class="ok f"><div class="ic"><i data-lucide="check"></i></div><h3>¡Gracias, ${esc(d.nombre)}!</h3><p style="color:var(--mut);margin:6px 0 16px">Recibimos tu solicitud. Un asesor te contactará pronto.</p><a class="btn" target="_blank" rel="noopener" href="${wa(msg)}"><i data-lucide="message-circle"></i>Agilizar por WhatsApp</a>${DEMO ? '<p class="note" style="margin-top:12px">Modo demostración: los datos no se enviaron.</p>' : ''}</div>`;
+    lucide.createIcons();
+  };
+  const tg = $('#tg'), root = document.documentElement;
+  const paint = () => { tg.innerHTML = `<i data-lucide="${root.dataset.theme == 'dark' ? 'sun' : 'moon'}"></i>`; lucide.createIcons(); };
+  tg.onclick = () => { const n = root.dataset.theme == 'dark' ? 'light' : 'dark'; root.dataset.theme = n; localStorage.kbTheme = n; paint(); };
+  paint();
 
   lucide.createIcons();
   const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && (e.target.classList.add('in'), io.unobserve(e.target))), { threshold: .12 });

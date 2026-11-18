@@ -8,15 +8,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+<script>document.documentElement.dataset.theme=localStorage.kbTheme||"light"</script>
 <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 <header class="nav">
   <a class="logo" href="#"><i data-lucide="shield-check"></i><span id="brand">KB</span></a>
   <nav id="menu">
-    <a href="#servicios">Servicios</a><a href="#nosotros">Nosotros</a><a href="#blog">Blog</a><a href="#contacto">Contacto</a>
+    <a href="#servicios">Servicios</a><a href="#nosotros">Nosotros</a><a href="#blog">Blog</a><a href="#cotizar">Cotizar</a><a href="#contacto">Contacto</a>
   </nav>
   <a class="btn" id="cta" target="_blank" rel="noopener"><i data-lucide="message-circle"></i><span>Cotizar</span></a>
+  <button id="tg" aria-label="Cambiar tema"><i data-lucide="moon"></i></button>
   <button id="burger" aria-label="Menú"><i data-lucide="menu"></i></button>
 </header>
 <main id="app"></main>
