@@ -1,0 +1,39 @@
+{
+  "info": {
+    "name": "KB Seguridad",
+    "tagline": "Protección profesional en Panamá",
+    "heroTitle": "Tu tranquilidad, nuestra misión",
+    "heroText": "Seguridad privada, monitoreo 24/7 y sistemas electrónicos para hogares, empresas y proyectos residenciales en todo Panamá.",
+    "whatsapp": "50760000000",
+    "phone": "+507 6000-0000",
+    "email": "info@kbseguridad.com",
+    "address": "Ciudad de Panamá, Panamá",
+    "about": "KB es una empresa panameña de seguridad con personal certificado, tecnología de punta y atención personalizada. Diseñamos soluciones a la medida de cada cliente, con respuesta rápida y total confidencialidad.",
+    "heroImage": "",
+    "aboutImage": ""
+  },
+  "stats": [
+    { "n": "15+", "l": "Años de experiencia" },
+    { "n": "300+", "l": "Clientes protegidos" },
+    { "n": "24/7", "l": "Central de monitoreo" },
+    { "n": "98%", "l": "Clientes satisfechos" }
+  ],
+  "services": [
+    { "icon": "shield-check", "title": "Guardias de seguridad", "desc": "Personal uniformado, capacitado y verificado para edificios, comercios y eventos." },
+    { "icon": "cctv", "title": "Cámaras y videovigilancia", "desc": "Instalación de CCTV con acceso remoto desde tu celular." },
+    { "icon": "bell-ring", "title": "Alarmas y monitoreo 24/7", "desc": "Central de monitoreo con respuesta inmediata ante cualquier alerta." },
+    { "icon": "lock-keyhole", "title": "Control de acceso", "desc": "Tarjetas, biometría y registro de visitantes para tu propiedad." },
+    { "icon": "car", "title": "Escolta y custodia", "desc": "Protección para ejecutivos, valores y traslados." },
+    { "icon": "building-2", "title": "Asesoría de seguridad", "desc": "Evaluamos riesgos y diseñamos un plan de protección a tu medida." }
+  ],
+  "posts": [
+    { "id": "1", "title": "5 consejos para proteger tu hogar en vacaciones", "date": "2026-11-01", "excerpt": "Pequeños hábitos que reducen el riesgo mientras estás fuera.", "body": "Antes de viajar, avisa a un vecino de confianza y evita publicar tu ubicación en redes.\nUsa luces con temporizador y verifica puertas y ventanas.\nUn sistema de alarma con monitoreo te permite estar tranquilo desde cualquier lugar.", "image": "" },
+    { "id": "2", "title": "¿Cuántas cámaras necesita tu negocio?", "date": "2026-10-15", "excerpt": "Cómo elegir la cantidad y ubicación ideal de cámaras.", "body": "Todo depende del tamaño del local y de los puntos de acceso.\nPrioriza entradas, cajas y bodegas.\nSolicita una evaluación gratuita y te recomendamos la mejor distribución.", "image": "" }
+  ],
+  "faq": [
+    { "q": "servicio,ofrecen,hacen", "a": "Ofrecemos guardias de seguridad, cámaras, alarmas con monitoreo 24/7, control de acceso, escolta y asesoría." },
+    { "q": "cotiz,precio,costo,cuánto,cuanto", "a": "Cada servicio se cotiza a la medida. Un asesor te prepara una propuesta sin compromiso." },
+    { "q": "horario,hora,abierto,atienden", "a": "Nuestra central opera 24/7. Las oficinas atienden de lunes a viernes, 8:00 a.m. a 5:00 p.m." },
+    { "q": "ubicaci,donde,dónde,direcci,cobertura", "a": "Estamos en Ciudad de Panamá y damos cobertura en todo el país." }
+  ]
+}

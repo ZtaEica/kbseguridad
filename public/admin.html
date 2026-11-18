@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Panel de administración</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#faf9f6">
+<script src="/theme.js"></script>
+<link rel="stylesheet" href="/style.css">
+<style>
+.box{max-width:820px;margin:30px auto;padding:0 16px 60px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+.tb{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:8px 18px;font:inherit;font-weight:600;cursor:pointer;color:var(--mut);transition:.2s}
+.tb.on{background:var(--brand);color:var(--on-brand);border-color:var(--brand)}
+label{display:block;font-weight:600;font-size:.85rem;margin:14px 0 4px}
+input,textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font:inherit;background:var(--card);color:var(--ink)}
+input:focus,textarea:focus{outline:2px solid var(--b)}
+.card{margin-bottom:16px}.card:hover{transform:none;box-shadow:none}
+.hint{color:var(--mut);font-size:.85rem}
+</style>
+</head>
+<body>
+<div class="admin-tools"><a href="/">← Ver sitio</a><button class="theme-toggle" type="button" data-theme-toggle aria-label="Tema oscuro" aria-pressed="false" title="Cambiar al tema oscuro">
+    <svg class="theme-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z"/></svg>
+    <svg class="theme-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4m0-14.2-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>
+    <span class="theme-label" aria-hidden="true">Oscuro</span>
+  </button></div>
+<div class="box" id="r"></div>
+<script>
+const S = {
+  info: [['name','Nombre de la empresa'],['tagline','Eslogan corto'],['heroTitle','Título principal'],['heroText','Texto principal','t'],['whatsapp','WhatsApp (solo números, con 507 al inicio)'],['phone','Teléfono'],['email','Correo'],['address','Dirección'],['about','Sobre nosotros','t'],['heroImage','Imagen principal (opcional)','i'],['aboutImage','Imagen de "Nosotros" (opcional)','i']],
+  stats: [['n','Número (ej. 15+)'],['l','Etiqueta']],
+  services: [['icon','Icono (nombre en lucide.dev/icons)'],['title','Título'],['desc','Descripción','t']],
+  posts: [['title','Título'],['date','Fecha (AAAA-MM-DD)'],['excerpt','Resumen','t'],['body','Contenido (un párrafo por línea)','t'],['image','Imagen (opcional)','i']],
+  faq: [['q','Palabras clave que activan la respuesta (separadas por coma)'],['a','Respuesta del chatbot','t']]
+};
+const T = { info: 'Información', stats: 'Cifras', services: 'Servicios', posts: 'Blog', faq: 'Chatbot' };
+let D, tab = 'info', tk = localStorage.kbt || '';
+const $ = s => document.querySelector(s), R = $('#r');
+const esc = s => String(s ?? '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+const cur = i => Array.isArray(D[tab]) ? D[tab][i] : D[tab];
+
+async function api(p, o = {}) {
+  const r = await fetch(p, { ...o, headers: { 'Content-Type': 'application/json', 'x-token': tk } });
+  const j = await r.json(); if (!r.ok) throw Error(j.error); return j;
+}
+function login(msg = '') {
+  R.innerHTML = `<div class="card" style="max-width:360px;margin:15vh auto"><h2>Panel de administración</h2><p style="color:var(--ink)">${msg}</p><label>Contraseña</label><input id="p" type="password"><br><br><button class="btn" id="go">Entrar</button></div>`;
+  $('#p').addEventListener('keydown', e => { if (e.key === 'Enter') $('#go').click(); });
+  $('#p').focus();
+  $('#go').onclick = async () => {
+    try { tk = (await api('/api/login', { method: 'POST', body: JSON.stringify({ password: $('#p').value }) })).token; localStorage.kbt = tk; start(); }
+    catch (e) { login(e.message); }
+  };
+}
+async function start() { D = await api('/api/content'); draw(); }
+function draw() {
+  const list = Array.isArray(D[tab]), items = list ? D[tab] : [D[tab]];
+  R.innerHTML = `<h2>Panel de administración</h2><p class="hint">Edita y pulsa «Guardar cambios». El sitio se actualiza al instante.</p>
+  <div class="tabs">${Object.entries(T).map(([k, v]) => `<button class="tb ${k == tab ? 'on' : ''}" data-t="${k}">${v}</button>`).join('')}</div>` +
+  items.map((it, i) => `<div class="card">${S[tab].map(([k, l, t]) => `<label>${l}</label>` + (
+    t == 'i' ? `<input type="file" accept="image/*" data-i="${i}" data-k="${k}">${it[k] ? `<img src="${esc(it[k])}" style="max-height:90px;margin-top:8px;border-radius:10px"><button class="tb" data-x="${i}" data-k="${k}" style="margin-top:6px">Quitar imagen</button>` : ''}` :
+    t == 't' ? `<textarea rows="4" data-i="${i}" data-k="${k}">${esc(it[k])}</textarea>` :
+    `<input value="${esc(it[k])}" data-i="${i}" data-k="${k}">`)).join('')}
+    ${list ? `<br><br><button class="btn o" data-d="${i}">Eliminar</button>` : ''}</div>`).join('') +
+  `<div class="row">${list ? '<button class="btn o" id="add">+ Agregar</button>' : ''}<button class="btn" id="sv">Guardar cambios</button><a class="btn o" href="/" target="_blank">Ver sitio</a></div><p id="st" class="hint" style="margin-top:12px"></p>`;
+}
+R.addEventListener('input', e => { const t = e.target; if (t.dataset.k && t.type != 'file') cur(t.dataset.i)[t.dataset.k] = t.value; });
+R.addEventListener('change', e => {
+  const t = e.target; if (t.type != 'file' || !t.files[0]) return;
+  const rd = new FileReader();
+  rd.onload = () => { const im = new Image(); im.onload = () => {
+    const s = Math.min(1, 1000 / im.width), c = document.createElement('canvas');
+    c.width = im.width * s; c.height = im.height * s; c.getContext('2d').drawImage(im, 0, 0, c.width, c.height);
+    cur(t.dataset.i)[t.dataset.k] = c.toDataURL('image/jpeg', .8); draw();
+  }; im.src = rd.result; };
+  rd.readAsDataURL(t.files[0]);
+});
+R.addEventListener('click', async e => {
+  const t = e.target.closest('button'); if (!t) return;
+  if (t.dataset.t) { tab = t.dataset.t; draw(); }
+  if (t.dataset.d) { if (confirm('¿Eliminar este elemento?')) { D[tab].splice(t.dataset.d, 1); draw(); } }
+  if (t.dataset.x) { cur(t.dataset.x)[t.dataset.k] = ''; draw(); }
+  if (t.id == 'add') { const o = { id: Date.now() + '' }; S[tab].forEach(([k]) => o[k] = ''); if (tab == 'posts') o.date = new Date().toISOString().slice(0, 10); D[tab].unshift(o); draw(); }
+  if (t.id == 'sv') {
+    $('#st').textContent = 'Guardando…';
+    try { await api('/api/content', { method: 'POST', body: JSON.stringify(D) }); $('#st').textContent = '✓ Guardado'; }
+    catch (x) { $('#st').textContent = x.message; if (/autoriz/i.test(x.message)) login('Sesión expirada'); }
+  }
+});
+tk ? start().catch(() => login()) : login();
+</script>
+</body>
+</html>
